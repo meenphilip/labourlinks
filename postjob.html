@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a Job - LabourLinks Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .form-section {
+        background: linear-gradient(
+            rgba(247, 148, 29, 0.1),
+            rgba(247, 148, 29, 0.1)
+          ),
+          url("https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg");
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+          <div class="flex space-x-7">
+            <div>
+              <a href="landing.html" class="flex items-center py-4 px-2">
+                <span class="font-semibold text-orange-500 text-2xl"
+                  >LabourLinks</span
+                >
+              </a>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center space-x-1">
+            <a
+              href="landing.html"
+              class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >Home</a
+            >
+            <a
+              href="jobs.html"
+              class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >Jobs</a
+            >
+            <a
+              href="postjob.html"
+              class="py-4 px-2 text-orange-500 border-b-4 border-orange-500 font-semibold"
+              >Post Job</a
+            >
+            <div class="relative group">
+              <button
+                class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >
+                Dashboards <i class="fas fa-chevron-down ml-1 text-xs"></i>
+              </button>
+              <div
+                class="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-0 w-48 z-10"
+              >
+                <a
+                  href="clientdashboard.html"
+                  class="block px-4 py-2 text-gray-700 hover:bg-orange-50"
+                  >Client Dashboard</a
+                >
+                <a
+                  href="workersdashboard.html"
+                  class="block px-4 py-2 text-gray-700 hover:bg-orange-50"
+                  >Worker Dashboard</a
+                >
+              </div>
+            </div>
+            <a href="login.html" class="text-orange-500 hover:underline"
+              >Log in here</a
+            >
+            <a
+              href="signup.html"
+              class="py-4 px-2 text-white bg-orange-500 rounded hover:bg-orange-600 transition duration-300"
+              >Sign Up</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Form Header -->
+    <section class="form-section text-white py-12">
+      <div class="container mx-auto px-6 text-center">
+        <h1 class="text-3xl font-bold mb-4">Post a Job Opportunity</h1>
+        <p class="text-xl max-w-2xl mx-auto">
+          Reach thousands of skilled workers across Kenya looking for their next
+          opportunity
+        </p>
+      </div>
+    </section>
+
+    <!-- Job Posting Form -->
+    <section class="py-12">
+      <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Job Details</h2>
+
+          <form id="job-post-form">
+            <div
+              id="form-error"
+              class="hidden mb-6 p-4 bg-red-50 text-red-700 rounded-lg"
+            ></div>
+            <div
+              id="form-success"
+              class="hidden mb-6 p-4 bg-green-50 text-green-700 rounded-lg"
+            >
+              Job posted successfully! Redirecting to your dashboard...
+            </div>
+            <!-- Basic Information -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Basic Information
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700 mb-2">Job Title*</label>
+                  <input
+                    type="text"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="e.g. Construction Worker, Farm Hand"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Job Type*</label>
+                  <select
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    required
+                  >
+                    <option value="">Select Job Type</option>
+                    <option value="manual">Manual Labour</option>
+                    <option value="casual">Casual Work</option>
+                    <option value="seasonal">Seasonal Work</option>
+                    <option value="domestic">Domestic Work</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location Details -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Location Details
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700 mb-2">County*</label>
+                  <select
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    required
+                  >
+                    <option value="">Select County</option>
+                    <option value="nairobi">Nairobi</option>
+                    <option value="mombasa">Mombasa</option>
+                    <option value="kisumu">Kisumu</option>
+                    <option value="nakuru">Nakuru</option>
+                    <option value="kiambu">Kiambu</option>
+                    <option value="machakos">Machakos</option>
+                    <option value="kakamega">Kakamega</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Town/Area*</label>
+                  <input
+                    type="text"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="e.g. Westlands, Industrial Area"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Description -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Job Description
+              </h3>
+              <div>
+                <label class="block text-gray-700 mb-2"
+                  >Detailed Description*</label
+                >
+                <textarea
+                  class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  rows="6"
+                  placeholder="Describe the job responsibilities, requirements, and any other important details..."
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Compensation & Duration -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Compensation & Duration
+              </h3>
+              <div class="grid md:grid-cols-3 gap-6">
+                <div>
+                  <label class="block text-gray-700 mb-2"
+                    >Daily Rate (KES)*</label
+                  >
+                  <div class="flex">
+                    <span
+                      class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-600"
+                      >KES</span
+                    >
+                    <input
+                      type="number"
+                      min="500"
+                      class="w-full p-3 rounded-r-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      placeholder="2500"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Start Date*</label>
+                  <input
+                    type="date"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Duration</label>
+                  <select
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    <option value="1day">1 Day</option>
+                    <option value="1week">1 Week</option>
+                    <option value="2weeks">2 Weeks</option>
+                    <option value="1month">1 Month</option>
+                    <option value="3months">3 Months</option>
+                    <option value="6months">6 Months</option>
+                    <option value="1year">1 Year</option>
+                    <option value="permanent">Permanent</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Requirements -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Requirements
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700 mb-2"
+                    >Experience Level</label
+                  >
+                  <select
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    <option value="noexperience">No Experience Required</option>
+                    <option value="1year">1+ Years Experience</option>
+                    <option value="3years">3+ Years Experience</option>
+                    <option value="5years">5+ Years Experience</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2"
+                    >Certifications (if any)</label
+                  >
+                  <input
+                    type="text"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="e.g. NCA, Driving License"
+                  />
+                </div>
+              </div>
+              <div class="mt-6">
+                <label class="block text-gray-700 mb-2"
+                  >Other Requirements</label
+                >
+                <textarea
+                  class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  rows="3"
+                  placeholder="List any other requirements (tools, equipment, skills, etc.)"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Company Information -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Company Information
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700 mb-2"
+                    >Company/Employer Name*</label
+                  >
+                  <input
+                    type="text"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="Your company name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Industry</label>
+                  <select
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    <option value="">Select Industry</option>
+                    <option value="construction">Construction</option>
+                    <option value="agriculture">Agriculture</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="hospitality">Hospitality</option>
+                    <option value="transport">Transport</option>
+                    <option value="domestic">Domestic Services</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mt-6">
+                <label class="block text-gray-700 mb-2"
+                  >About Your Company</label
+                >
+                <textarea
+                  class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  rows="3"
+                  placeholder="Brief description of your company (optional)"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Contact Information
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700 mb-2"
+                    >Contact Person*</label
+                  >
+                  <input
+                    type="text"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="Full name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Phone Number*</label>
+                  <div class="flex">
+                    <span
+                      class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-600"
+                      >+254</span
+                    >
+                    <input
+                      type="tel"
+                      pattern="[0-9]{9}"
+                      class="w-full p-3 rounded-r-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      placeholder="712345678"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2">Email Address*</label>
+                  <input
+                    type="email"
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="your@email.com"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2"
+                    >Preferred Contact Method</label
+                  >
+                  <select
+                    class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  >
+                    <option value="phone">Phone Call</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="email">Email</option>
+                    <option value="any">Any Method</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Posting Options -->
+            <div class="mb-8">
+              <h3
+                class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2"
+              >
+                Job Posting Options
+              </h3>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    class="mt-1 mr-3 text-orange-500 rounded border-gray-300 focus:ring-orange-500"
+                  />
+                  <label for="featured" class="text-gray-700">
+                    <span class="font-medium">Feature this job</span> (KES 500)
+                    - Highlight your job at the top of search results for 7 days
+                  </label>
+                </div>
+                <div class="flex items-start">
+                  <input
+                    type="checkbox"
+                    id="urgent"
+                    class="mt-1 mr-3 text-orange-500 rounded border-gray-300 focus:ring-orange-500"
+                  />
+                  <label for="urgent" class="text-gray-700">
+                    <span class="font-medium">Mark as Urgent</span> - Attract
+                    more applicants by showing this job is time-sensitive
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terms and Submit -->
+            <div
+              class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0"
+            >
+              <div class="flex items-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  class="mt-1 mr-3 text-orange-500 rounded border-gray-300 focus:ring-orange-500"
+                  required
+                />
+                <label for="terms" class="text-sm text-gray-600">
+                  I agree to LabourLinks'
+                  <a href="#" class="text-orange-500 hover:underline"
+                    >Terms of Service</a
+                  >
+                  and confirm this job posting complies with
+                  <a href="#" class="text-orange-500 hover:underline"
+                    >Kenyan labour laws</a
+                  >
+                </label>
+              </div>
+              <button
+                type="submit"
+                class="w-full md:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition duration-300"
+              >
+                <span id="submit-text">Post Job</span>
+                <span id="submit-loading" class="hidden">
+                  <i class="fas fa-spinner fa-spin ml-2"></i>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document
+        .getElementById("job-post-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const form = e.target;
+          const errorDiv = document.getElementById("form-error");
+          const successDiv = document.getElementById("form-success");
+          const submitText = document.getElementById("submit-text");
+          const submitLoading = document.getElementById("submit-loading");
+
+          // Reset states
+          errorDiv.classList.add("hidden");
+          successDiv.classList.add("hidden");
+          submitText.classList.remove("hidden");
+          submitLoading.classList.add("hidden");
+
+          // Validate phone number
+          const phoneInput = form.querySelector('input[type="tel"]');
+          if (!phoneInput.value.match(/^[0-9]{9}$/)) {
+            errorDiv.textContent =
+              "Please enter a valid Kenyan phone number (9 digits without +254)";
+            errorDiv.classList.remove("hidden");
+            return;
+          }
+
+          // Show loading state
+          submitText.classList.add("hidden");
+          submitLoading.classList.remove("hidden");
+
+          // Simulate form submission
+          setTimeout(() => {
+            successDiv.classList.remove("hidden");
+            setTimeout(() => {
+              window.location.href = "client-dashboard.html";
+            }, 2000);
+          }, 1500);
+        });
+    </script>
+
+    <!-- How It Works -->
+    <section class="py-12 bg-orange-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">
+          How LabourLinks Works for Employers
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+            <div
+              class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-edit text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">
+              1. Post Your Job
+            </h3>
+            <p class="text-gray-600">
+              Fill out our simple form to list your job opportunity. It takes
+              just 5 minutes.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+            <div
+              class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-users text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">
+              2. Workers Apply
+            </h3>
+            <p class="text-gray-600">
+              Qualified workers across Kenya will see and apply for your
+              position.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+            <div
+              class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fas fa-handshake text-orange-500 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">
+              3. Hire the Best
+            </h3>
+            <p class="text-gray-600">
+              Review applicants and hire the most suitable candidates for your
+              needs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">LabourLinks</h3>
+            <p class="text-gray-400">
+              Connecting Kenyan workers with opportunities since 2023.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li>
+                <a href="index.html" class="text-gray-400 hover:text-white"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="jobs.html" class="text-gray-400 hover:text-white"
+                  >Jobs</a
+                >
+              </li>
+              <li>
+                <a href="post-job.html" class="text-gray-400 hover:text-white"
+                  >Post Job</a
+                >
+              </li>
+              <li>
+                <a href="login.html" class="text-gray-400 hover:text-white"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Contact</h4>
+            <ul class="space-y-2">
+              <li class="flex items-center text-gray-400">
+                <i class="fas fa-phone-alt mr-2"></i> +254 700 123456
+              </li>
+              <li class="flex items-center text-gray-400">
+                <i class="fas fa-envelope mr-2"></i> info@labourlinks.co.ke
+              </li>
+              <li class="flex items-center text-gray-400">
+                <i class="fas fa-map-marker-alt mr-2"></i> Nairobi, Kenya
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400"
+        >
+          <p>&copy; 2023 LabourLinks Kenya. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

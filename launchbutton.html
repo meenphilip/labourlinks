@@ -1,0 +1,48 @@
+<!-- Launch Website Button Component -->
+<div class="launch-container mx-auto p-8 max-w-md">
+    <button id="launchBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      <span>Launch Platform</span>
+    </button>
+    <p class="text-gray-500 mt-3 text-center text-sm">Click to start your LabourLinks experience</p>
+    <div id="errorMsg" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm"></div>
+  </div>
+  
+  <script>
+  document.getElementById('launchBtn').addEventListener('click', async function() {
+    const btn = this;
+    const errorMsg = document.getElementById('errorMsg');
+    
+    try {
+      // Show loading state
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Connecting...</span>
+      `;
+      errorMsg.classList.add('hidden');
+  
+      // First check if server is running
+      const response = await fetch('http://localhost:8000/api/health', {method: 'GET'});
+      
+      if (!response.ok) throw new Error('Server not ready');
+      
+      // Server is running - open it
+      const newWindow = window.open('http://localhost:8000', '_blank');
+      
+      // If popup blocked, redirect current page
+      if (!newWindow || newWindow.closed) {
+        window.location.href = 'http://localhost:8000';
+      }
+    } catch (error) {
+      errorMsg.textContent = `Connection failed: ${error.message}\n\nPlease ensure:
+      1. The server is running (check terminal)
+      2. Database is initialized
+      3. Port 8000 is available`;
+      errorMsg.classList.remove('hidden');
+    } fina

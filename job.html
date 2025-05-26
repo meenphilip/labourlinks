@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings - LabourLinks Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="landing.html" class="flex items-center py-4 px-2">
+                            <span class="font-semibold text-orange-500 text-2xl">LabourLinks</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="landing.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300">Home</a>
+                    <a href="job.html" class="py-4 px-2 text-orange-500 border-b-4 border-orange-500 font-semibold">Jobs</a>
+                    <a href="postjob.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300">Post Job</a>
+                    <a href="login.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300">Login</a>
+                    <a href="signup.html" class="py-4 px-2 text-white bg-orange-500 rounded hover:bg-orange-600 transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search and Filter Section -->
+    <section class="py-8 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="bg-orange-50 p-6 rounded-lg shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Find Labour Jobs in Kenya</h2>
+                
+                <!-- Search Bar -->
+                <div class="mb-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search for jobs (e.g. 'construction', 'driver')" 
+                               class="w-full p-4 pr-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Job Type Filter -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Job Type</label>
+                        <select class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <option value="">All Types</option>
+                            <option value="manual">Manual Labour</option>
+                            <option value="casual">Casual Work</option>
+                            <option value="seasonal">Seasonal Work</option>
+                            <option value="domestic">Domestic Work</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Filter -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Location</label>
+                        <select class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <option value="">All Kenya</option>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="kisumu">Kisumu</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="eldoret">Eldoret</option>
+                            <option value="thika">Thika</option>
+                        </select>
+                    </div>
+
+                    <!-- Salary Range -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Daily Rate (KES)</label>
+                        <select class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <option value="">Any Rate</option>
+                            <option value="500-1000">KES 500 - 1,000</option>
+                            <option value="1000-2000">KES 1,000 - 2,000</option>
+                            <option value="2000-3000">KES 2,000 - 3,000</option>
+                            <option value="3000+">KES 3,000+</option>
+                        </select>
+                    </div>
+
+                    <!-- Sort By -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">Sort By</label>
+                        <select class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="salary-high">Highest Paying</option>
+                            <option value="salary-low">Lowest Paying</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300">
+                        Search Jobs
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Listings Section -->
+    <section class="py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-800">Showing 24 jobs in Kenya</h3>
+                <div class="flex items-center">
+                    <span class="mr-2 text-gray-600">View:</span>
+                    <button class="p-2 bg-orange-100 text-orange-500 rounded-l-lg">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="p-2 bg-white text-gray-500 rounded-r-lg border border-l-0">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Job Card 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-hammer text-orange-500"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Mason Needed</h3>
+                                <p class="text-gray-600">Nairobi, Westlands</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Experienced mason required for residential construction project. Must have own tools.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Manual Labour</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Construction</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm">KES</span>
+                                <span class="font-bold text-gray-800">2,500</span>
+                                <span class="text-gray-500 text-sm">/day</span>
+                            </div>
+                            <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Card 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-tractor text-orange-500"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Farm Workers</h3>
+                                <p class="text-gray-600">Kiambu, Limuru</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">5 farm hands needed for tea picking season. Accommodation provided.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Seasonal Work</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">Agriculture</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm">KES</span>
+                                <span class="font-bold text-gray-800">1,800</span>
+                                <span class="text-gray-500 text-sm">/day</span>
+                            </div>
+                            <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Card 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-truck text-orange-500"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Delivery Driver</h3>
+                                <p class="text-gray-600">Mombasa, Nyali</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Boda boda driver needed for food deliveries. Must have valid license.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Casual Work</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full">Transport</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm">KES</span>
+                                <span class="font-bold text-gray-800">2,200</span>
+                                <span class="text-gray-500 text-sm">/day</span>
+                            </div>
+                            <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Card 4 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-broom text-orange-500"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Office Cleaner</h3>
+                                <p class="text-gray-600">Nairobi, CBD</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Full-time cleaner needed for office building. Experience preferred.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Domestic Work</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">Cleaning</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm">KES</span>
+                                <span class="font-bold text-gray-800">1,500</span>
+                                <span class="text-gray-500 text-sm">/day</span>
+                            </div>
+                            <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Card 5 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-paint-roller text-orange-500"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Painter</h3>
+                                <p class="text-gray-600">Nakuru, Lanet</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Skilled painter needed for residential property. 2-week contract.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Manual Labour</span>
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full">Painting</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm">KES</span>
+                                <span class="font-bold text-gray-800">2,800</span>
+                                <span class="text-gray-500 text-sm">/day</span>
+                            </div>
+                            <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Card 6 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-utensils text-orange-500"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-800">Kitchen Helper</h3>
+                                <p class="text-gray-600">Kisumu, Milimani</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Restaurant seeking kitchen assistant. Food handling certificate a plus.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Casual Work</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full">Hospitality</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm">KES</span>
+                                <span class="font-bold text-gray-800">1,600</span>
+                                <span class="text-gray-500 text-sm">/day</span>
+                            </div>
+                            <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-8 flex justify-center">
+                <nav class="flex items-center space-x-2">
+                    <a href="#" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-500 hover:bg-gray-50">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="#" class="px-4 py-2 border border-orange-500 bg-orange-500 text-white rounded-lg">1</a>
+                    <a href="#" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">2</a>
+                    <a href="#" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">3</a>
+                    <span class="px-4 py-2 text-gray-500">...</span>
+                    <a href="#" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">8</a>
+                    <a href="#" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-500 hover:bg-gray-50">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobsContainer = document.getElementById('jobs-container');
+            const loadingDiv = document.getElementById('jobs-loading');
+            const noJobsDiv = document.getElementById('no-jobs');
+            
+            // Fetch jobs from API
+            fetch('http://127.0.0.1:5000/api//jobs')
+                .then(response => response.json())
+                .then(jobs => {
+                    loadingDiv.style.display = 'none';
+                    
+                    if (jobs.length === 0) {
+                        noJobsDiv.style.display = 'block';
+                        return;
+                    }
+
+                    // Update job count
+                    document.querySelector('h3.text-xl').textContent = 
+                        `Showing ${jobs.length} jobs in Kenya`;
+
+                    // Render job cards
+                    jobs.forEach(job => {
+                        const jobCard = document.createElement('div');
+                        jobCard.className = 'bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 job-card transition duration-300';
+                        jobCard.innerHTML = `
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-orange-100 p-3 rounded-full">
+                                        <i class="fas ${getJobIcon(job.job_type)} text-orange-500"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-semibold text-gray-800">${job.title}</h3>
+                                        <p class="text-gray-600">${job.location}</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">${job.description.substring(0, 100)}...</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">${job.job_type}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <span class="text-gray-500 text-sm">${job.salary ? 'KES ' + job.salary : 'Negotiable'}</span>
+                                    </div>
+                                    <a href="job-detail.html?id=${job.id}" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                                </div>
+                            </div>
+                        `;
+                        jobsContainer.appendChild(jobCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading jobs:', error);
+                    loadingDiv.style.display = 'none';
+                    noJobsDiv.style.display = 'block';
+                });
+
+            function getJobIcon(jobType) {
+                const icons = {
+                    'construction': 'fa-hammer',
+                    'farming': 'fa-tractor',
+                    'delivery': 'fa-truck',
+                    'cleaning': 'fa-broom',
+                    'hospitality': 'fa-utensils',
+                    'painting': 'fa-paint-roller'
+                };
+                return icons[jobType.toLowerCase()] || 'fa-briefcase';
+            }
+        });
+    </script>
+</div>
+</section>
+    <!-- Call to Action -->
+    <section class="py-12 bg-orange-50">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Can't find what you're looking for?</h2>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Create a job alert and we'll notify you when matching jobs are posted in your preferred locations.</p>
+            <a href="signup.html" class="px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition duration-300 inline-block">
+                Create Free Account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">LabourLinks</h3>
+                    <p class="text-gray-400">Connecting Kenyan workers with opportunities since 2023.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="landing.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="job.html" class="text-gray-400 hover:text-white">Jobs</a></li>
+                        <li><a href="postjob.html" class="text-gray-400 hover:text-white">Post Job</a></li>
+                        <li><a href="login.html" class="text-gray-400 hover:text-white">Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> +254 700 123456</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> info@labourlinks.co.ke</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> Nairobi, Kenya</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 LabourLinks Kenya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

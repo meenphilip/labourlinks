@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Dashboard - LabourLinks Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar {
+            min-height: calc(100vh - 4rem);
+        }
+        .active-nav-item {
+            background-color: #F7941D;
+            color: white;
+        }
+        .active-nav-item:hover {
+            background-color: #e07e0c;
+        }
+        .skill-badge {
+            transition: all 0.3s ease;
+        }
+        .skill-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="landing.html" class="flex items-center py-4 px-2">
+                            <span class="font-semibold text-orange-500 text-2xl">LabourLinks</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="landing.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300">Home</a>
+                    <a href="job.html" class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300">Jobs</a>
+                    <div class="relative group">
+                        <button class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300 flex items-center">
+                            <span>Samuel K.</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+                            <a href="workersdashboard.html" class="block px-4 py-2 text-gray-800 hover:bg-orange-500 hover:text-white">Dashboard</a>
+                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-orange-500 hover:text-white">Profile</a>
+                            <a href="landing.html" class="block px-4 py-2 text-gray-800 hover:bg-orange-500 hover:text-white">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 text-white sidebar">
+            <div class="p-4">
+                <div class="flex items-center space-x-4 p-4 border-b border-gray-700">
+                    <div class="bg-orange-500 text-white rounded-full w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-user-hard-hat text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Samuel Kamau</h3>
+                        <p class="text-xs text-gray-400">Verified Worker</p>
+                    </div>
+                </div>
+                <nav class="mt-6">
+                    <a href="workersdashboard.html" class="flex items-center px-4 py-3 active-nav-item rounded-lg">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-briefcase mr-3"></i>
+                        <span>My Jobs</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-file-alt mr-3"></i>
+                        <span>Applications</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-wallet mr-3"></i>
+                        <span>Earnings</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-star mr-3"></i>
+                        <span>Reviews</span>
+                    </a>
+                    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-cog mr-3"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-6">Worker Dashboard</h1>
+            
+            <!-- Welcome Banner -->
+            <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg p-6 mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold mb-2">Welcome back, Samuel!</h2>
+                        <p class="mb-4">You have 3 active jobs and 5 new job recommendations</p>
+                        <a href="job.html" class="inline-block bg-white text-orange-600 font-bold py-2 px-4 rounded hover:bg-gray-100 transition duration-300">
+                            Browse Jobs
+                        </a>
+                    </div>
+                    <div class="hidden md:block">
+                        <i class="fas fa-hard-hat text-5xl opacity-20"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="bg-orange-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-briefcase text-orange-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-500 text-sm">Active Jobs</h3>
+                            <p class="text-2xl font-bold text-gray-800">3</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-alt text-blue-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-500 text-sm">Applications</h3>
+                            <p class="text-2xl font-bold text-gray-800">12</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-wallet text-green-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-500 text-sm">Earnings (KES)</h3>
+                            <p class="text-2xl font-bold text-gray-800">24,500</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">My Skills</h2>
+                    <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">Edit Skills</a>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge px-4 py-2 bg-orange-100 text-orange-800 rounded-full font-medium">Masonry</span>
+                    <span class="skill-badge px-4 py-2 bg-blue-100 text-blue-800 rounded-full font-medium">Construction</span>
+                    <span class="skill-badge px-4 py-2 bg-green-100 text-green-800 rounded-full font-medium">Painting</span>
+                    <span class="skill-badge px-4 py-2 bg-purple-100 text-purple-800 rounded-full font-medium">Tiling</span>
+                    <span class="skill-badge px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full font-medium">Plastering</span>
+                </div>
+            </div>
+
+            <!-- Active Jobs -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Active Jobs</h2>
+                    <a href="#" class="text-orange-500 hover:text-orange-600 font-medium">View All</a>
+                </div>
+                <div class="space-y-4">
+                    <!-- Job 1 -->
+                    <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-hammer text-orange-500"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="font-medium text-gray-900">Construction Assistant</h3>
+                            <p class="text-sm text-gray-500">Prime Builders Kenya • Nairobi, Westlands</p>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-800">KES 2,500/day</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">3 months</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#" class="text-orange-500 hover:text-orange-600">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Job 2 -->
+                    <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-paint-roller text-orange-500"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="font-medium text-gray-900">House Painter</h3>
+                            <p class="text-sm text-gray-500">Karen Homes • Nairobi, Karen</p>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-800">KES 2,800/day</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">2 weeks</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="#" class="text-orange-500 hover:text-orange-600">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommended Jobs -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Recommended Jobs</h2>
+                    <a href="job.html" class="text-orange-500 hover:text-orange-600 font-medium">Browse All</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Job 1 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-orange-100 p-3 rounded-full">
+                                    <i class="fas fa-trowel text-orange-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">Mason Needed</h3>
+                                    <p class="text-gray-600">Nairobi, Kilimani</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Looking for experienced mason for residential project. Must have own tools.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Manual Labour</span>
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Construction</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-gray-500 text-sm">KES</span>
+                                    <span class="font-bold text-gray-800">2,200</span>
+                                    <span class="text-gray-500 text-sm">/day</span>
+                                </div>
+                                <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 2 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-orange-100 p-3 rounded-full">
+                                    <i class="fas fa-tools text-orange-500"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold text-gray-800">General Worker</h3>
+                                    <p class="text-gray-600">Nairobi, Industrial Area</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Factory seeking general workers for packaging and loading duties.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">Casual Work</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">Manufacturing</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-gray-500 text-sm">KES</span>
+                                    <span class="font-bold text-gray-800">1,800</span>
+                                    <span class="text-gray-500 text-sm">/day</span>
+                                </div>
+                                <a href="job details.html" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingDiv = document.getElementById('dashboard-loading');
+            const activeJobsDiv = document.getElementById('active-jobs');
+            const recommendedJobsDiv = document.getElementById('recommended-jobs');
+            
+            // Fetch worker dashboard data
+            Promise.all([
+                fetch('http://127.0.0.1:5000/api/worker/stats').then(res => res.json()),
+                fetch('http://127.0.0.1:5000/api/worker/jobs/active').then(res => res.json()),
+                fetch('http://127.0.0.1:5000/api/worker/jobs/recommended').then(res => res.json())
+            ])
+            .then(([stats, activeJobs, recommendedJobs]) => {
+                loadingDiv.style.display = 'none';
+                
+                // Update stats
+                document.getElementById('active-jobs-count').textContent = stats.activeJobs;
+                document.getElementById('total-applications').textContent = stats.totalApplications;
+                document.getElementById('total-earnings').textContent = stats.totalEarnings.toLocaleString();
+                
+                // Update welcome banner
+                document.querySelector('.bg-gradient-to-r h2').textContent = `Welcome back, ${stats.workerName}!`;
+                document.querySelector('.bg-gradient-to-r p').textContent = 
+                    `You have ${stats.activeJobs} active jobs and ${stats.recommendedJobs} new job recommendations`;
+                
+                // Populate active jobs
+                const activeJobsList = document.getElementById('active-jobs-list');
+                if (activeJobs.length > 0) {
+                    activeJobs.forEach(job => {
+                        const jobDiv = document.createElement('div');
+                        jobDiv.className = 'flex items-start p-4 border border-gray-200 rounded-lg hover:bg-gray-50';
+                        jobDiv.innerHTML = `
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="bg-orange-100 p-3 rounded-full">
+                                    <i class="fas ${getJobIcon(job.type)} text-orange-500"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h3 class="font-medium text-gray-900">${job.title}</h3>
+                                <p class="text-sm text-gray-500">${job.company} • ${job.location}</p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-800">KES ${job.salary}/day</span>
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">${job.duration}</span>
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">${job.status}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="job-detail.html?id=${job.id}" class="text-orange-500 hover:text-orange-600">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                            </div>
+                        `;
+                        activeJobsList.appendChild(jobDiv);
+                    });
+                    activeJobsDiv.style.display = 'block';
+                }
+                
+                // Populate recommended jobs
+                const recommendedJobsGrid = document.getElementById('recommended-jobs-grid');
+                if (recommendedJobs.length > 0) {
+                    recommendedJobs.forEach(job => {
+                        const jobCard = document.createElement('div');
+                        jobCard.className = 'border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-300';
+                        jobCard.innerHTML = `
+                            <div class="p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-orange-100 p-3 rounded-full">
+                                        <i class="fas ${getJobIcon(job.type)} text-orange-500"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-semibold text-gray-800">${job.title}</h3>
+                                        <p class="text-gray-600">${job.location}</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-4">${job.description.substring(0, 100)}...</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    ${job.tags.map(tag => 
+                                        `<span class="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">${tag}</span>`
+                                    ).join('')}
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <span class="text-gray-500 text-sm">KES</span>
+                                        <span class="font-bold text-gray-800">${job.salary}</span>
+                                        <span class="text-gray-500 text-sm">/day</span>
+                                    </div>
+                                    <a href="job-detail.html?id=${job.id}" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                                </div>
+                            </div>
+                        `;
+                        recommendedJobsGrid.appendChild(jobCard);
+                    });
+                    recommendedJobsDiv.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading worker dashboard:', error);
+                loadingDiv.innerHTML = `
+                    <p class="text-red-500">Error loading dashboard data. Please try again later.</p>
+                `;
+            });
+
+            function getJobIcon(jobType) {
+                const icons = {
+                    'construction': 'fa-hammer',
+                    'painting': 'fa-paint-roller',
+                    'masonry': 'fa-trowel',
+                    'general': 'fa-tools',
+                    'cleaning': 'fa-broom'
+                };
+                return icons[jobType.toLowerCase()] || 'fa-briefcase';
+            }
+        });
+    </script>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">LabourLinks</h3>
+                    <p class="text-gray-400">Connecting Kenyan workers with opportunities since 2023.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="landing.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="job.html" class="text-gray-400 hover:text-white">Jobs</a></li>
+                        <li><a href="postjob.html" class="text-gray-400 hover:text-white">Post Job</a></li>
+                        <li><a href="login,html.html" class="text-gray-400 hover:text-white">Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> +254 700 123456</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> info@labourlinks.co.ke</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> Nairobi, Kenya</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 LabourLinks Kenya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

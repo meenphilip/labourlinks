@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Details - LabourLinks Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .job-header {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.pexels.com/photos/3862632/pexels-photo-3862632.jpeg");
+        background-size: cover;
+        background-position: center;
+      }
+      .whatsapp-btn:hover {
+        background-color: #128c7e;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Back Button -->
+    <div class="container mx-auto px-6 pt-6">
+      <a
+        href="jobs.html"
+        class="inline-flex items-center text-orange-500 hover:text-orange-600"
+      >
+        <i class="fas fa-arrow-left mr-2"></i>
+        Back to Jobs
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+          <div class="flex space-x-7">
+            <div>
+              <a href="landing.html" class="flex items-center py-4 px-2">
+                <span class="font-semibold text-orange-500 text-2xl"
+                  >LabourLinks</span
+                >
+              </a>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center space-x-1">
+            <a
+              href="landing.html"
+              class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >Home</a
+            >
+            <a
+              href="job.html"
+              class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >Jobs</a
+            >
+            <a
+              href="postjob.html"
+              class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >Post Job</a
+            >
+            <a
+              href="login.html"
+              class="py-4 px-2 text-gray-500 font-semibold hover:text-orange-500 transition duration-300"
+              >Login</a
+            >
+            <a
+              href="signup.html"
+              class="py-4 px-2 text-white bg-orange-500 rounded hover:bg-orange-600 transition duration-300"
+              >Sign Up</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Job Header -->
+    <section class="job-header text-white py-16">
+      <div class="container mx-auto px-6">
+        <div class="max-w-4xl">
+          <div id="loading" class="text-center py-8">
+            <i class="fas fa-spinner fa-spin text-orange-500 text-2xl"></i>
+            <p class="mt-2 text-orange-200">Loading job details...</p>
+          </div>
+          <div id="job-header-content" style="display: none">
+            <div class="flex items-center mb-4">
+              <div class="bg-orange-500 p-3 rounded-full">
+                <i id="job-icon" class="fas fa-hammer text-white"></i>
+              </div>
+              <div class="ml-4">
+                <h1 id="job-title" class="text-3xl font-bold"></h1>
+                <p id="job-location-date" class="text-orange-200"></p>
+              </div>
+            </div>
+            <div id="job-tags" class="flex flex-wrap gap-4 mt-6"></div>
+          </div>
+          <div
+            id="error-message"
+            class="text-center py-8"
+            style="display: none"
+          >
+            <i class="fas fa-exclamation-circle text-red-500 text-2xl mb-2"></i>
+            <p class="text-red-300">
+              Error loading job details. Please try again later.
+            </p>
+            <a
+              href="job.html"
+              class="mt-4 inline-block text-orange-300 hover:text-orange-100"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> Back to Jobs
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get("id");
+
+        if (!jobId) {
+          window.location.href = "job.html";
+          return;
+        }
+
+        // Show loading state
+        document.getElementById("loading").style.display = "block";
+        document.getElementById("job-header-content").style.display = "none";
+        document.getElementById("error-message").style.display = "none";
+
+        fetch(`http://127.0.0.1:5000/api/jobs/${jobId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                response.status === 404
+                  ? "Job not found"
+                  : "Failed to load job details"
+              );
+            }
+            return response.json();
+          })
+          .then((job) => {
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("job-header-content").style.display =
+              "block";
+
+            // Set job header content
+            document.getElementById("job-title").textContent = job.title;
+            document.getElementById("job-location-date").textContent = `${
+              job.location
+            } • Posted ${formatDate(job.created_at)}`;
+
+            // Set job icon
+            const icon = getJobIcon(job.job_type);
+            document.getElementById(
+              "job-icon"
+            ).className = `fas ${icon} text-white`;
+
+            // Set job tags
+            const tagsContainer = document.getElementById("job-tags");
+            tagsContainer.innerHTML = ""; // Clear existing tags
+            const tags = [job.job_type, job.location.split(",")[0].trim()];
+            tags.forEach((tag) => {
+              const tagElement = document.createElement("span");
+              tagElement.className =
+                "px-4 py-2 bg-white bg-opacity-20 rounded-full";
+              tagElement.textContent = tag;
+              tagsContainer.appendChild(tagElement);
+            });
+
+            // Update job description
+            document.getElementById("job-description").textContent =
+              job.description;
+
+            // Update responsibilities if they exist
+            if (job.responsibilities) {
+              const responsibilities = job.responsibilities.split("\n");
+              const list = document.getElementById("responsibilities-list");
+              list.innerHTML = ""; // Clear existing items
+
+              responsibilities.forEach((resp) => {
+                if (resp.trim()) {
+                  const li = document.createElement("li");
+                  li.textContent = resp.trim();
+                  list.appendChild(li);
+                }
+              });
+              document.getElementById(
+                "responsibilities-section"
+              ).style.display = "block";
+            }
+
+            // Update requirements if they exist
+            if (job.requirements) {
+              const requirements = job.requirements.split("\n");
+              const list = document.getElementById("requirements-list");
+              list.innerHTML = ""; // Clear existing items
+
+              requirements.forEach((req) => {
+                if (req.trim()) {
+                  const li = document.createElement("li");
+                  li.textContent = req.trim();
+                  list.appendChild(li);
+                }
+              });
+              document.getElementById("requirements-section").style.display =
+                "block";
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("error-message").style.display = "block";
+            document
+              .getElementById("error-message")
+              .querySelector("p").textContent = error.message;
+          });
+
+        function getJobIcon(jobType) {
+          const icons = {
+            construction: "fa-hammer",
+            farming: "fa-tractor",
+            delivery: "fa-truck",
+            cleaning: "fa-broom",
+            gardening: "fa-leaf",
+          };
+          return icons[jobType.toLowerCase()] || "fa-briefcase";
+        }
+
+        function formatDate(dateString) {
+          const date = new Date(dateString);
+          const diff = Math.floor((new Date() - date) / (1000 * 60 * 60 * 24));
+          return diff === 0
+            ? "Today"
+            : `${diff} day${diff !== 1 ? "s" : ""} ago`;
+        }
+      });
+    </script>
+
+    <!-- Job Details Section -->
+    <section class="py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Main Content -->
+          <div class="md:col-span-2">
+            <!-- Job Description -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                Job Description
+              </h2>
+              <p id="job-description" class="text-gray-600 mb-4"></p>
+
+              <div id="responsibilities-section" style="display: none">
+                <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                  Responsibilities:
+                </h3>
+                <ul
+                  id="responsibilities-list"
+                  class="list-disc pl-5 text-gray-600 space-y-2 mb-6"
+                ></ul>
+              </div>
+
+              <div id="requirements-section" style="display: none">
+                <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                  Requirements:
+                </h3>
+                <ul
+                  id="requirements-list"
+                  class="list-disc pl-5 text-gray-600 space-y-2"
+                ></ul>
+              </div>
+            </div>
+
+            <script>
+              // Inside the fetch job.then() callback
+              document.getElementById("job-description").textContent =
+                job.description;
+
+              // Parse responsibilities if they exist
+              if (job.responsibilities) {
+                const responsibilities = job.responsibilities.split("\n");
+                const list = document.getElementById("responsibilities-list");
+
+                responsibilities.forEach((resp) => {
+                  if (resp.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = resp.trim();
+                    list.appendChild(li);
+                  }
+                });
+                document.getElementById(
+                  "responsibilities-section"
+                ).style.display = "block";
+              }
+
+              // Parse requirements if they exist
+              if (job.requirements) {
+                const requirements = job.requirements.split("\n");
+                const list = document.getElementById("requirements-list");
+
+                requirements.forEach((req) => {
+                  if (req.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = req.trim();
+                    list.appendChild(li);
+                  }
+                });
+                document.getElementById("requirements-section").style.display =
+                  "block";
+              }
+            </script>
+
+            <!-- About Employer -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                About the Employer
+              </h2>
+              <div id="employer-loading" class="text-center py-8">
+                <i class="fas fa-spinner fa-spin text-orange-500 text-2xl"></i>
+                <p class="mt-2 text-gray-600">
+                  Loading employer information...
+                </p>
+              </div>
+              <div id="employer-content" style="display: none">
+                <div class="flex items-start mb-4">
+                  <div class="bg-gray-200 p-4 rounded-full mr-4">
+                    <i class="fas fa-building text-gray-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <h3
+                      id="employer-name"
+                      class="text-lg font-semibold text-gray-800"
+                    ></h3>
+                    <p id="employer-type" class="text-gray-600"></p>
+                    <div class="flex items-center mt-2">
+                      <div id="employer-rating" class="flex text-orange-400">
+                        <!-- Stars will be added dynamically -->
+                      </div>
+                      <span
+                        id="employer-review-count"
+                        class="text-gray-500 text-sm ml-2"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+                <p id="employer-description" class="text-gray-600"></p>
+              </div>
+              <div
+                id="employer-error"
+                class="text-center py-8"
+                style="display: none"
+              >
+                <i
+                  class="fas fa-exclamation-circle text-red-500 text-2xl mb-2"
+                ></i>
+                <p class="text-red-500">Could not load employer information</p>
+              </div>
+            </div>
+
+            <script>
+              // Inside the fetch job.then() callback
+              fetch(`http://127.0.0.1:5000/api/users/${job.posted_by}`)
+                .then((response) => {
+                  if (!response.ok) throw new Error("Employer not found");
+                  return response.json();
+                })
+                .then((employer) => {
+                  document.getElementById("employer-loading").style.display =
+                    "none";
+                  document.getElementById("employer-content").style.display =
+                    "block";
+
+                  // Set employer info
+                  document.getElementById("employer-name").textContent =
+                    employer.company_name || "Private Employer";
+                  document.getElementById("employer-type").textContent =
+                    employer.company_type
+                      ? `${employer.company_type} • ${employer.location}`
+                      : "Private Employer";
+                  document.getElementById("employer-description").textContent =
+                    employer.description ||
+                    "No additional information available.";
+
+                  // Set rating stars
+                  const ratingContainer =
+                    document.getElementById("employer-rating");
+                  const rating = employer.rating || 0;
+                  const fullStars = Math.floor(rating);
+                  const hasHalfStar = rating % 1 >= 0.5;
+
+                  for (let i = 0; i < 5; i++) {
+                    const star = document.createElement("i");
+                    if (i < fullStars) {
+                      star.className = "fas fa-star";
+                    } else if (i === fullStars && hasHalfStar) {
+                      star.className = "fas fa-star-half-alt";
+                    } else {
+                      star.className = "far fa-star";
+                    }
+                    ratingContainer.appendChild(star);
+                  }
+
+                  // Set review count
+                  document.getElementById(
+                    "employer-review-count"
+                  ).textContent = `${rating.toFixed(1)} (${
+                    employer.review_count || 0
+                  } reviews)`;
+                })
+                .catch((error) => {
+                  console.error("Error loading employer:", error);
+                  document.getElementById("employer-loading").style.display =
+                    "none";
+                  document.getElementById("employer-error").style.display =
+                    "block";
+                });
+            </script>
+          </div>
+
+          <!-- Sidebar -->
+          <div>
+            <!-- Job Overview -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6 sticky top-4">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">Job Overview</h2>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <i
+                    class="fas fa-money-bill-wave text-orange-500 mt-1 mr-3"
+                  ></i>
+                  <div>
+                    <h3 class="text-gray-500 text-sm">Daily Rate</h3>
+                    <p id="job-salary" class="font-semibold text-gray-800"></p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-briefcase text-orange-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="text-gray-500 text-sm">Job Type</h3>
+                    <p id="job-type" class="font-semibold text-gray-800"></p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i
+                    class="fas fa-map-marker-alt text-orange-500 mt-1 mr-3"
+                  ></i>
+                  <div>
+                    <h3 class="text-gray-500 text-sm">Location</h3>
+                    <p
+                      id="job-location"
+                      class="font-semibold text-gray-800"
+                    ></p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-calendar-alt text-orange-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="text-gray-500 text-sm">Start Date</h3>
+                    <p id="job-start-date" class="font-semibold text-gray-800">
+                      Immediate
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-clock text-orange-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="text-gray-500 text-sm">Duration</h3>
+                    <p
+                      id="job-duration"
+                      class="font-semibold text-gray-800"
+                    ></p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-users text-orange-500 mt-1 mr-3"></i>
+                  <div>
+                    <h3 class="text-gray-500 text-sm">Positions Available</h3>
+                    <p
+                      id="job-positions"
+                      class="font-semibold text-gray-800"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-3">
+                <a
+                  href="#apply"
+                  class="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+                >
+                  Apply Now
+                </a>
+                <a
+                  id="whatsapp-link"
+                  href="#"
+                  class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 whatsapp-btn"
+                >
+                  <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+                <button
+                  class="w-full text-center border border-orange-500 text-orange-500 hover:bg-orange-50 font-bold py-3 px-4 rounded-lg transition duration-300"
+                >
+                  Save Job
+                </button>
+              </div>
+            </div>
+
+            <script>
+              // Inside the fetch job.then() callback
+              document.getElementById("job-salary").textContent =
+                job.salary || "Negotiable";
+              document.getElementById("job-type").textContent = job.job_type;
+              document.getElementById("job-location").textContent =
+                job.location;
+              document.getElementById("job-duration").textContent =
+                job.duration || "Not specified";
+              document.getElementById("job-positions").textContent =
+                job.positions || "Not specified";
+
+              // Update WhatsApp link if contact number exists
+              if (job.contact_number) {
+                document.getElementById(
+                  "whatsapp-link"
+                ).href = `https://wa.me/${job.contact_number}`;
+              } else {
+                document.getElementById("whatsapp-link").style.display = "none";
+              }
+            </script>
+
+            <!-- Location Map -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">Job Location</h2>
+              <div
+                class="bg-gray-200 h-48 rounded-lg flex items-center justify-center"
+              >
+                <div class="text-center">
+                  <i
+                    class="fas fa-map-marked-alt text-3xl text-gray-400 mb-2"
+                  ></i>
+                  <p class="text-gray-500">Westlands, Nairobi</p>
+                  <p class="text-sm text-gray-400">(Map placeholder)</p>
+                </div>
+              </div>
+              <p class="text-gray-600 mt-4 text-sm">
+                Exact location details will be provided after application
+                approval.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Form -->
+        <div id="apply" class="bg-white rounded-lg shadow-md p-6 mt-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            Apply for This Position
+          </h2>
+          <form id="application-form">
+            <div
+              id="form-error"
+              class="hidden mb-6 p-4 bg-red-50 text-red-700 rounded-lg"
+            ></div>
+            <div
+              id="form-success"
+              class="hidden mb-6 p-4 bg-green-50 text-green-700 rounded-lg"
+            >
+              Application submitted successfully! The employer will contact you
+              soon.
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label class="block text-gray-700 mb-2">Full Name</label>
+                <input
+                  type="text"
+                  class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-2">Phone Number</label>
+                <div class="flex">
+                  <span
+                    class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-600"
+                    >+254</span
+                  >
+                  <input
+                    type="tel"
+                    pattern="[0-9]{9}"
+                    class="w-full p-3 rounded-r-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    placeholder="712345678"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-2">Email Address</label>
+                <input
+                  type="email"
+                  class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-2"
+                  >County of Residence</label
+                >
+                <select
+                  class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  required
+                >
+                  <option value="">Select County</option>
+                  <option value="nairobi">Nairobi</option>
+                  <option value="kiambu">Kiambu</option>
+                  <option value="mombasa">Mombasa</option>
+                  <option value="kisumu">Kisumu</option>
+                  <option value="nakuru">Nakuru</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label class="block text-gray-700 mb-2"
+                >Cover Letter (Optional)</label
+              >
+              <textarea
+                class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                rows="4"
+                placeholder="Tell the employer why you're a good fit for this position..."
+              ></textarea>
+            </div>
+
+            <div class="mb-6">
+              <label class="block text-gray-700 mb-2"
+                >Upload CV (PDF, max 2MB)</label
+              >
+              <div class="flex items-center justify-center w-full">
+                <label
+                  class="flex flex-col w-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+                >
+                  <div
+                    class="flex flex-col items-center justify-center pt-5 pb-6"
+                  >
+                    <i
+                      class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"
+                    ></i>
+                    <p class="text-sm text-gray-500">
+                      Click to upload or drag and drop
+                    </p>
+                    <p class="text-xs text-gray-500">PDF only (max. 2MB)</p>
+                  </div>
+                  <input type="file" class="hidden" accept=".pdf" />
+                </label>
+              </div>
+            </div>
+
+            <div class="flex items-center mb-6">
+              <input
+                type="checkbox"
+                id="terms"
+                class="w-4 h-4 text-orange-500 rounded border-gray-300 focus:ring-orange-500"
+                required
+              />
+              <label for="terms" class="ml-2 text-sm text-gray-600">
+                I agree to LabourLinks'
+                <a href="#" class="text-orange-500 hover:underline"
+                  >Terms of Service</a
+                >
+                and
+                <a href="#" class="text-orange-500 hover:underline"
+                  >Privacy Policy</a
+                >
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+            >
+              <span id="submit-text">Submit Application</span>
+              <span id="submit-loading" class="hidden">
+                <i class="fas fa-spinner fa-spin ml-2"></i>
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <script>
+          document
+            .getElementById("application-form")
+            .addEventListener("submit", function (e) {
+              e.preventDefault();
+
+              const form = e.target;
+              const errorDiv = document.getElementById("form-error");
+              const successDiv = document.getElementById("form-success");
+              const submitText = document.getElementById("submit-text");
+              const submitLoading = document.getElementById("submit-loading");
+
+              // Reset states
+              errorDiv.classList.add("hidden");
+              successDiv.classList.add("hidden");
+              submitText.classList.remove("hidden");
+              submitLoading.classList.add("hidden");
+
+              // Get form data
+              const formData = {
+                job_id: new URLSearchParams(window.location.search).get("id"),
+                full_name: form.querySelector('input[type="text"]').value,
+                phone: "+254" + form.querySelector('input[type="tel"]').value,
+                email: form.querySelector('input[type="email"]').value,
+                county: form.querySelector("select").value,
+                cover_letter: form.querySelector("textarea").value,
+                cv: form.querySelector('input[type="file"]').files[0],
+              };
+
+              // Simple validation
+              if (!formData.phone.match(/^\+254\d{9}$/)) {
+                errorDiv.textContent =
+                  "Please enter a valid Kenyan phone number";
+                errorDiv.classList.remove("hidden");
+                return;
+              }
+
+              // Show loading state
+              submitText.classList.add("hidden");
+              submitLoading.classList.remove("hidden");
+
+              // Submit to API
+              fetch("http://127.0.0.1:5000/api/applications", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+              })
+                .then((response) => {
+                  if (!response.ok) throw new Error("Application failed");
+                  return response.json();
+                })
+                .then((data) => {
+                  successDiv.classList.remove("hidden");
+                  form.reset();
+                })
+                .catch((error) => {
+                  errorDiv.textContent =
+                    error.message || "Failed to submit application";
+                  errorDiv.classList.remove("hidden");
+                })
+                .finally(() => {
+                  submitText.classList.remove("hidden");
+                  submitLoading.classList.add("hidden");
+                });
+            });
+        </script>
+
+        <!-- Similar Jobs -->
+        <div class="mt-12">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            Similar Jobs in <span id="similar-jobs-location"></span>
+          </h2>
+          <div id="similar-jobs-container" class="grid md:grid-cols-3 gap-6">
+            <!-- Similar jobs will be loaded here -->
+          </div>
+          <div id="similar-jobs-loading" class="text-center py-8">
+            <i class="fas fa-spinner fa-spin text-orange-500 text-2xl"></i>
+            <p class="mt-2 text-gray-600">Loading similar jobs...</p>
+          </div>
+          <div
+            id="no-similar-jobs"
+            class="text-center py-8"
+            style="display: none"
+          >
+            <p class="text-gray-600">No similar jobs found at this time.</p>
+          </div>
+        </div>
+
+        <script>
+          // Inside the fetch job.then() callback
+          const location = job.location.split(",")[0].trim();
+          document.getElementById("similar-jobs-location").textContent =
+            location;
+
+          // Fetch similar jobs
+          fetch(
+            `http://127.0.0.1:5000/api/jobs?location=${encodeURIComponent(
+              location
+            )}&limit=3`
+          )
+            .then((response) => response.json())
+            .then((jobs) => {
+              document.getElementById("similar-jobs-loading").style.display =
+                "none";
+
+              if (jobs.length === 0) {
+                document.getElementById("no-similar-jobs").style.display =
+                  "block";
+                return;
+              }
+
+              const container = document.getElementById(
+                "similar-jobs-container"
+              );
+              jobs.forEach((job) => {
+                const jobCard = document.createElement("div");
+                jobCard.className =
+                  "bg-white rounded-lg shadow-md overflow-hidden border border-gray-200";
+                jobCard.innerHTML = `
+                                <div class="p-6">
+                                    <div class="flex items-center mb-4">
+                                        <div class="bg-orange-100 p-3 rounded-full">
+                                            <i class="fas ${getJobIcon(
+                                              job.job_type
+                                            )} text-orange-500"></i>
+                                        </div>
+                                        <div class="ml-4">
+                                            <h3 class="text-lg font-semibold text-gray-800">${
+                                              job.title
+                                            }</h3>
+                                            <p class="text-gray-600">${
+                                              job.location
+                                            }</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 mb-4">${job.description.substring(
+                                      0,
+                                      100
+                                    )}...</p>
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <span class="text-gray-500 text-sm">${
+                                              job.salary
+                                                ? "KES " + job.salary
+                                                : "Negotiable"
+                                            }</span>
+                                        </div>
+                                        <a href="job-detail.html?id=${
+                                          job.id
+                                        }" class="text-orange-500 hover:text-orange-600 font-medium">View Details</a>
+                                    </div>
+                                </div>
+                            `;
+                container.appendChild(jobCard);
+              });
+            })
+            .catch((error) => {
+              console.error("Error loading similar jobs:", error);
+              document.getElementById("similar-jobs-loading").style.display =
+                "none";
+              document.getElementById("no-similar-jobs").style.display =
+                "block";
+            });
+        </script>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">LabourLinks</h3>
+            <p class="text-gray-400">
+              Connecting Kenyan workers with opportunities since 2023.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li>
+                <a href="landing.html" class="text-gray-400 hover:text-white"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="job.html" class="text-gray-400 hover:text-white"
+                  >Jobs</a
+                >
+              </li>
+              <li>
+                <a href="postjob.html" class="text-gray-400 hover:text-white"
+                  >Post Job</a
+                >
+              </li>
+              <li>
+                <a href="login.html" class="text-gray-400 hover:text-white"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Contact</h4>
+            <ul class="space-y-2">
+              <li class="flex items-center text-gray-400">
+                <i class="fas fa-phone-alt mr-2"></i> +254 700 123456
+              </li>
+              <li class="flex items-center text-gray-400">
+                <i class="fas fa-envelope mr-2"></i> info@labourlinks.co.ke
+              </li>
+              <li class="flex items-center text-gray-400">
+                <i class="fas fa-map-marker-alt mr-2"></i> Nairobi, Kenya
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400"
+        >
+          <p>&copy; 2025 LabourLinks Kenya. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
