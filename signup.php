@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database.php';
+require_once 'database.php';
 
 header("Content-Type: application/json");
 
@@ -10,9 +10,9 @@ $db = Database::getConnection();
 $data = json_decode(file_get_contents('php://input'), true);
 
 // Validate input
-if (empty($data['email']) || empty($data['password'])) {
+if (empty($data['email']) || empty($data['password']) || empty($data['user_type'])) {
     http_response_code(400);
-    echo json_encode(['error' => 'Email and password required']);
+    echo json_encode(['error' => 'Email, password and user type required']);
     exit;
 }
 
@@ -29,8 +29,15 @@ try {
 
     // Hash password and create user
     $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-    $stmt = $db->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
-    $stmt->execute([$data['email'], $hashedPassword]);
+    $stmt = $db->prepare("INSERT INTO users (email, password, user_type, name, phone, county, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+    $stmt->execute([
+        $data['email'], 
+        $hashedPassword, 
+        $data['user_type'],
+        $data['name'] ?? '',
+        $data['phone'] ?? '',
+        $data['county'] ?? ''
+    ]);
 
     // Return success
     echo json_encode([
