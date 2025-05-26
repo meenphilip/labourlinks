@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from sqlalchemy import text
 import os
 import logging
 from datetime import datetime
@@ -244,7 +245,7 @@ def get_job(job_id):
 def health_check():
     try:
         # Test database connection
-        db.session.execute("SELECT 1")
+        db.session.execute(text("SELECT 1"))
         return (
             jsonify(
                 {

@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database.php';
+require_once 'database.php';
 
 header("Content-Type: application/json");
 
@@ -18,7 +18,7 @@ if (empty($data['email']) || empty($data['password'])) {
 
 try {
     // Find user by email
-    $stmt = $db->prepare("SELECT id, password FROM users WHERE email = ?");
+    $stmt = $db->prepare("SELECT id, password, user_type FROM users WHERE email = ?");
     $stmt->execute([$data['email']]);
     $user = $stmt->fetch();
 
@@ -30,16 +30,10 @@ try {
 
     // Verify password
     if (password_verify($data['password'], $user['password'])) {
-        // Password correct - create session
-        require_once '../includes/session.php';
-        SessionManager::createUserSession([
-            'id' => $user['id'],
-            'email' => $data['email']
-        ]);
-
         echo json_encode([
             'success' => true,
-            'user_id' => $user['id']
+            'user_id' => $user['id'],
+            'user_type' => $user['user_type']
         ]);
     } else {
         http_response_code(401);

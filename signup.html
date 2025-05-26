@@ -345,7 +345,7 @@
 
               try {
                 const response = await fetch(
-                  "http://127.0.0.1:5000/api/signup",
+                  "http://localhost:3306/api/signup",
                   {
                     method: "POST",
                     headers: {
@@ -357,7 +357,7 @@
                       name: name,
                       phone: "+254" + phone,
                       county: county,
-                      user_type: userType,
+                      user_type: userType === "employer" ? "client" : userType,
                     }),
                   }
                 );
